@@ -11,10 +11,8 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v4
 
-      - name: Set up Xcode
-        run: |
-          xcode-select -s /Applications/Xcode.app/Contents/Developer
-          xcodebuild -version
+      - name: Show Xcode version
+        run: xcodebuild -version
 
       - name: Build & Archive
         run: |
