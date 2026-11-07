@@ -6,7 +6,7 @@ include $(THEOS)/makefiles/common.mk
 
 APP_NAME = LiveSubtitle
 
-LiveSubtitle_FILES = main.swift AudioCapture.swift SpeechRecog.swift SubtitleOverlay.swift TranslateHelper.swift
+LiveSubtitle_FILES = AudioCapture.swift SpeechRecog.swift SubtitleOverlay.swift TranslateHelper.swift
 LiveSubtitle_FRAMEWORKS = UIKit AVFoundation
 LiveSubtitle_CFLAGS = -fobjc-arc
 
