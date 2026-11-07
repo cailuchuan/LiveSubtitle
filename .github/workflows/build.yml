@@ -8,22 +8,25 @@ jobs:
   build:
     runs-on: macos-latest
     steps:
-      - name: Checkout source code
+      - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: Show Xcode version
-        run: xcodebuild -version
-
-      - name: Build & Archive
+      - name: Install Theos
         run: |
-          xcodebuild archive -scheme LiveSubtitle -configuration Release -archivePath LiveSubtitle.xcarchive
+          export THEOS=$HOME/theos
+          git clone https://github.com/theos/theos.git $THEOS
+          cd $THEOS
+          git checkout 99f8d422779888498a44b7d4d47242b40338071d
+          git submodule update --init --recursive
+          echo "THEOS=$THEOS" >> $GITHUB_ENV
 
-      - name: Export IPA
+      - name: Build package
         run: |
-          xcodebuild -exportArchive -archivePath LiveSubtitle.xcarchive -exportOptionsPlist exportOptions.plist -exportPath ./output
+          cd $GITHUB_WORKSPACE
+          make package
 
-      - name: Upload IPA
+      - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
         with:
           name: LiveSubtitle-IPA
-          path: output/*.ipa
+          path: packages/*.ipa
