@@ -13,9 +13,12 @@ jobs:
       - name: Install dependencies & Theos
         run: |
           sudo apt update
-          sudo apt install -y git perl build-essential ldid
+          sudo apt install -y git perl build-essential wget
           git clone https://github.com/theos/theos.git ~/theos
           echo "THEOS=$HOME/theos" >> $GITHUB_ENV
+          # 手动下载ldid
+          wget https://github.com/kevinssw/ldid/releases/download/v2.1.5/ldid-ubuntu-x86_64 -O ~/theos/bin/ldid
+          chmod +x ~/theos/bin/ldid
 
       - name: Build
         run: make package
